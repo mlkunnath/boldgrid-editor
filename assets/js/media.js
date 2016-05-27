@@ -113,6 +113,19 @@ IMHWPB.Media = function( $ ) {
 						var child_window = $( '.media-iframe iframe' )[0].contentWindow.IMHWPB.Media.instance;
 
 						var insert_process = function ( html_to_insert ) {
+							var insertType,
+								$html = $( html_to_insert ),
+								tag = $html.prop( 'tagName' );
+
+							// Determine the type of content we are inserting into the page.
+							if( 'A' === tag && $html.is( "[href*='maps.google.com']" ) ) {
+								insertType = 'google_map';
+							} else if( 'DIV' === tag && $html.hasClass( 'gridblock' ) ) {
+								insertType = 'gridblock';
+							} else {
+								insertType = 'unknown';
+							}
+
 							child_window.uncheck_all();
 							$( '.media-modal-close' ).click();
 
@@ -147,6 +160,14 @@ IMHWPB.Media = function( $ ) {
 								//wp.media.editor.insert( html_to_insert );
 							}
 
+							// Log our new milestone.
+							$.post( ajaxurl, {
+								'action'        : 'boldgrid_add_feedback',
+								'security'      : ( typeof window.boldgrid_feedback_via_ajax === 'undefined' ? null : window.boldgrid_feedback_via_ajax ),
+								'feedback_key'  : 'insert_' + insertType,
+								'feedback_value': '1'
+							});
+
 							$( window ).trigger( 'resize' );
 						};
 
@@ -157,14 +178,6 @@ IMHWPB.Media = function( $ ) {
 						} else {
 							insert_process( html_to_insert );
 						}
-
-						// Log our new milestone.
-						$.post( ajaxurl, {
-							'action'        : 'boldgrid_add_feedback',
-							'security'      : ( typeof window.boldgrid_feedback_via_ajax === 'undefined' ? null : window.boldgrid_feedback_via_ajax ),
-							'feedback_key'  : 'insert_gridblock',
-							'feedback_value': '1'
-						});
 					}
 				} );
 	};
