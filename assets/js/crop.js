@@ -77,7 +77,7 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
-	 * @summar Crop an image.
+	 * @summary Crop an image.
 	 *
 	 * Makes an ajax call to crop an image.
 	 *
@@ -106,6 +106,14 @@ BoldgridEditor.crop = function( $ ) {
 			// Validate our response and take action.
 			self.cropValidate( response );
 		} );
+
+		// Log our new milestone.
+		$.post( ajaxurl, {
+			'action'        : 'boldgrid_add_feedback',
+			'security'      : ( typeof window.boldgrid_feedback_via_ajax === 'undefined' ? null : window.boldgrid_feedback_via_ajax ),
+			'feedback_key'  : 'crop_on_replace',
+			'feedback_value': '1'
+		});
 	}
 
 	/**
