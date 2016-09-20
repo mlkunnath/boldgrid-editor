@@ -18,7 +18,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 ## Description ##
 
-BoldGrid Editor is a standalone plugin which adds functionality to the existing TinyMCE Editor used in the WordPress page and post editor. Maria Lorna A. Kunnath is using boldgrid in a separate hosting server.
+BoldGrid Editor is a standalone plugin which adds functionality to the existing TinyMCE Editor used in the WordPress page and post editor.
 
 ## Installation ##
 
